@@ -1,5 +1,5 @@
 // homepage
-import { StyleSheet, View, Text, StatusBar, Image } from 'react-native';
+import { StyleSheet, View, Text, StatusBar, Image, ScrollView } from 'react-native';
 const songs = [
   {
     id: "1",
@@ -21,11 +21,49 @@ const songs = [
   }
 ];
 
-
-
+const radios = [
+  {
+    id: "1",
+    nameRadio: "Drake",
+    artists: "Drake, Kendrick Lamar, Chris Brown, Summer Wal...",
+    image: require("../../assets/images/spotifyImages/radios/Drake.jpg"),
+  },
+  {
+    id: "2",
+    nameRadio: "Hozier",
+    artists: "Noah Kahan, Hozier, David Kushner, Chance Pena, KA...",
+    image: require("../../assets/images/spotifyImages/radios/Hozier.jpg"),
+  },
+  {
+    id: "3",
+    nameRadio: "NickleBack",
+    artists: "Linkin Park, Nickelback, The Offspring, Foo Figters, Ri...",
+    image: require("../../assets/images/spotifyImages/radios/NickleBack.jpg"),
+  },
+];
+const albums = [
+  {
+    id: "1",
+    nameAlbum: "DeBí TiRAR MáS FOToS",
+    author: "Bad Bunny",
+    image: require("../../assets/images/spotifyImages/albums/BadBunny.jpg"),
+  },
+  {
+    id: "2",
+    nameAlbum: "Hurry Up Tomorrow",
+    author: "The Weeknd",
+    image: require("../../assets/images/spotifyImages/albums/TheWeeknd.jpg"),
+  },
+  {
+    id: "3",
+    nameAlbum: "Short n'Sweet",
+    author: "Sabrina Carpenter",
+    image: require("../../assets/images/spotifyImages/albums/SabrinaCarpenter.jpg"),
+  }
+];
 export default function HomeScreen() {
   return (
-    <View style={styles.body} >
+    <ScrollView showsVerticalScrollIndicator={true} style={styles.body} >
       <View style={styles.header}> {/*header */}
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { marginLeft: 15, marginRight: 20, paddingRight: 10, paddingLeft: 10 }]} >H</Text>
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { paddingRight: 15, paddingLeft: 15 }]}>All</Text>
@@ -37,7 +75,7 @@ export default function HomeScreen() {
         <Text style={[styles.textAuthor, { marginLeft: 11, marginBottom: 5 }]} >Jump into a session based on your tastes</Text>
       </View>
       <View>
-        <Text style={[styles.textHeading, { marginLeft: 11, marginBottom: 5 }]} >Start listening</Text>
+        <Text style={styles.textHeading} >Start listening</Text>
         <View> {/*Songs */}
           {
             songs.map((song) => (
@@ -47,17 +85,25 @@ export default function HomeScreen() {
                   <Text style={styles.textNameSong}>{song.nameSong}</Text>
                   <Text style={styles.textAuthor}>{song.author}</Text>
                 </View>
-                <Text style={{ color: "white", marginRight: 10 }}>...</Text>
+                <Text style={{ color: "#bebcbc", marginRight: 10, fontSize: 25 }}>...</Text>
               </View>
             ))
           }
+          <Text style={[styles.textHeading, { marginTop: 20, marginBottom: 20 }]}>Popular radio</Text>
         </View>
 
-        <View>{/* radioes */}
-
-        </View>
-      </View>
-    </View >
+        <ScrollView horizontal >{/* radioes */}
+          {radios.map((radio) => (
+            <View style={styles.radioSection}>
+              <Image source={radio.image} style={styles.imageRadio} />
+              <Text style={styles.textRadio}>{radio.artists}</Text>
+            </View>
+          ))
+          }
+        </ScrollView>
+        <Text style={[styles.textHeading, { marginTop: 20, marginBottom: 20 }]}>Popular albums and singles</Text>
+      </View >
+    </ScrollView >
   );
 }
 
@@ -93,7 +139,9 @@ const styles = StyleSheet.create({
   textHeading: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 20
+    fontSize: 20,
+    marginLeft: 11,
+    marginBottom: 5,
   },
   songSection: {
     flexDirection: "row",
@@ -114,4 +162,22 @@ const styles = StyleSheet.create({
     color: "#bebcbc",
     fontSize: 12,
   },
+  radioSection: {
+    width: 170,
+    height: 200,
+
+  },
+  imageRadio: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    marginLeft: 11,
+
+  },
+  textRadio: {
+    color: "#bebcbc",
+    fontSize: 12,
+    marginLeft: 11,
+    marginTop: 10,
+  }
 });
