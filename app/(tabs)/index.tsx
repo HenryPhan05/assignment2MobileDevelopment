@@ -1,5 +1,5 @@
 // homepage
-import { StyleSheet, View, Text, StatusBar, Image, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, StatusBar, Image, ScrollView, Alert, Button } from 'react-native';
 const songs = [
   {
     id: "1",
@@ -88,6 +88,16 @@ const favoriteArtists = [
     image: require("../../assets/images/spotifyImages/artists/BrunoMars.jpg"),
   },
 ];
+//alert button
+const alertBtn = () => {
+  // title, message, array of buttons, options
+  Alert.alert('Alert', 'Alert Button pressed!', [
+    {
+      text: 'OK',
+    },
+
+  ])
+}
 export default function HomeScreen() {
   return (
     <ScrollView showsVerticalScrollIndicator={true} style={styles.body} >
@@ -146,6 +156,9 @@ export default function HomeScreen() {
             </View>
           ))}
         </ScrollView>
+        <View> {/**alert button */}
+          <Button title="Alert" onPress={alertBtn} />
+        </View>
       </View >
     </ScrollView >
   );
@@ -241,7 +254,7 @@ const styles = StyleSheet.create({
   artistSection: {
     width: 220,
     height: 250,
-
+    marginBottom: 20,
   },
   artistImage: {
     width: 200,
@@ -255,6 +268,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 14,
     textAlign: "center",
+  },
 
-  }
 });
