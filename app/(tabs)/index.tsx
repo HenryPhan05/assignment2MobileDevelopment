@@ -102,6 +102,15 @@ export default function HomeScreen() {
           }
         </ScrollView>
         <Text style={[styles.textHeading, { marginTop: 20, marginBottom: 20 }]}>Popular albums and singles</Text>
+        <ScrollView horizontal> {/* Albums section */}
+          {albums.map((album) => (
+            <View style={styles.albumSection}>
+              <Image source={album.image} style={styles.imageAlbum} />
+              <Text style={styles.textAlbum}>{album.author}</Text>
+            </View>
+          ))}
+        </ScrollView>
+        <Text style={[styles.textHeading, { marginTop: 20, marginBottom: 20 }]}>Your favourite artists</Text>
       </View >
     </ScrollView >
   );
@@ -165,16 +174,30 @@ const styles = StyleSheet.create({
   radioSection: {
     width: 170,
     height: 200,
-
   },
   imageRadio: {
     width: 150,
     height: 150,
     borderRadius: 10,
     marginLeft: 11,
-
   },
   textRadio: {
+    color: "#bebcbc",
+    fontSize: 12,
+    marginLeft: 11,
+    marginTop: 10,
+  },
+  albumSection: {
+    width: 170,
+    height: 200,
+  },
+  imageAlbum: {
+    width: 150,
+    height: 150,
+    borderRadius: 10,
+    marginLeft: 11,
+  },
+  textAlbum: {
     color: "#bebcbc",
     fontSize: 12,
     marginLeft: 11,
