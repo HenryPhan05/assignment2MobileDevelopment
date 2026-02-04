@@ -101,7 +101,7 @@ const alertBtn = () => {
 export default function HomeScreen() {
   return (
     <ScrollView showsVerticalScrollIndicator={true} style={styles.body} >
-      <View style={styles.header}> {/*header */}
+      <View style={[styles.header, styles.stickyHeader,]}> {/*header */}
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { marginLeft: 15, marginRight: 20, paddingRight: 10, paddingLeft: 10 }]} >H</Text>
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { paddingRight: 15, paddingLeft: 15 }]}>All</Text>
         <Text style={[styles.textHeader, styles.backGroundButtonNonSelectedHeader, { paddingRight: 15, paddingLeft: 15 }]}>Music</Text>
@@ -169,10 +169,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
+  stickyHeader: {
+    backgroundColor: '#171717',
+    paddingBottom: 5,
+  },
   header: {
     paddingTop: StatusBar.currentHeight,
     flexDirection: "row",
-    flexWrap: 'wrap',
     gap: 5,
     marginTop: 12,
     marginBottom: 10,
@@ -180,6 +183,7 @@ const styles = StyleSheet.create({
   textHeader: {
     color: "white",
     fontSize: 13,
+
   },
   backGroundButtonSelectedHeader: {
     backgroundColor: "#49f384",
