@@ -60,7 +60,7 @@ export default function LibraryTab() {
     ])
   }
   return (
-    <ScrollView style={styles.body}>
+    <ScrollView showsHorizontalScrollIndicator={false} style={styles.body}>
       <View > {/**header */}
         <View style={styles.topHeader}> {/**top header */}
           <Text style={styles.userColor}>H</Text>
@@ -102,11 +102,11 @@ export default function LibraryTab() {
             </View>
           ))}
         </View>
-        <View style={styles.likeSongSection}> // because it look like the Likesongs just change the image
+        <View style={styles.likeSongSection}> {/*/ because it look like the Likesongs just change the image*/}
           <Image source={myPlaylist.image} style={styles.songImage} />
           <View key={myPlaylist.id} style={{ gap: 2 }}>
             <Text style={[styles.textName, { marginLeft: 5 }]}>{myPlaylist.name}</Text>
-            <Text style={styles.textCategory}> <MaterialIcons name='push-pin' size={12} color={'#49f384'} /> {myPlaylist.category} • {myPlaylist.nameUser}</Text>
+            <Text style={styles.textCategory}>  {myPlaylist.category} • {myPlaylist.nameUser}</Text>
           </View>
         </View>
         <View style={styles.addSection}>

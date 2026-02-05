@@ -100,7 +100,7 @@ const alertBtn = () => {
 }
 export default function HomeScreen() {
   return (
-    <ScrollView showsVerticalScrollIndicator={true} style={styles.body} >
+    <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={styles.body} >
       <View style={[styles.header, styles.stickyHeader,]}> {/*header */}
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { marginLeft: 15, marginRight: 20, paddingRight: 10, paddingLeft: 10 }]} >H</Text>
         <Text style={[styles.textHeader, styles.backGroundButtonSelectedHeader, { paddingRight: 15, paddingLeft: 15 }]}>All</Text>
