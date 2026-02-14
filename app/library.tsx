@@ -1,5 +1,5 @@
-// your
-import { StyleSheet, View, Text, StatusBar, Image, ScrollView, Button, Alert } from 'react-native';
+// your library
+import { Alert, Button, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
 export default function LibraryTab() {
@@ -8,37 +8,37 @@ export default function LibraryTab() {
     name: 'Liked Songs',
     quantity: '2 songs',
     category: 'Playlist',
-    image: require('../../assets/images/spotifyImages/others/LikedSongs.jpg'),
+    image: require('../assets/images/spotifyImages/others/LikedSongs.jpg'),
   };
   const artists = [
     {
       id: "1",
       name: "The Weeknd",
-      image: require("../../assets/images/spotifyImages/artists/TheWeeknd.jpg"),
+      image: require("../assets/images/spotifyImages/artists/TheWeeknd.jpg"),
       job: 'artist',
     },
     {
       id: "2",
       name: "Taylor Swift",
-      image: require("../../assets/images/spotifyImages/artists/TaylorSwift.jpg"),
+      image: require("../assets/images/spotifyImages/artists/TaylorSwift.jpg"),
       job: 'artist',
     },
     {
       id: "3",
       name: "Shawn Mendes",
-      image: require("../../assets/images/spotifyImages/artists/ShawnMendes.jpg"),
+      image: require("../assets/images/spotifyImages/artists/ShawnMendes.jpg"),
       job: 'artist',
     },
     {
       id: "4",
       name: "Marshmello",
-      image: require("../../assets/images/spotifyImages/artists/MarshMello.jpg"),
+      image: require("../assets/images/spotifyImages/artists/MarshMello.jpg"),
       job: 'artist',
     },
     {
       id: "5",
       name: "Bruno Mars",
-      image: require("../../assets/images/spotifyImages/artists/BrunoMars.jpg"),
+      image: require("../assets/images/spotifyImages/artists/BrunoMars.jpg"),
       job: 'artist',
     },
   ];
@@ -47,7 +47,7 @@ export default function LibraryTab() {
     name: 'My Playlist #1',
     category: 'Playlist',
     nameUser: 'Henry Phan',
-    image: require('../../assets/images/spotifyImages/others/myPlaylist.jpg'),
+    image: require('../assets/images/spotifyImages/others/myPlaylist.jpg'),
   }
   //alert button
   const alertBtn = () => {
@@ -118,7 +118,7 @@ export default function LibraryTab() {
           <Text style={styles.textName}>Add podcasts & shows</Text>
         </View>
         <View style={styles.addSection}>
-          <Image source={require('../../assets/images/spotifyImages/others/downloadIcon.png')} style={styles.iconDownload} />
+          <Image source={require('../assets/images/spotifyImages/others/downloadIcon.png')} style={styles.iconDownload} />
           <Text style={styles.textName}>import your music</Text>
         </View>
         <View style={[styles.addSection, { marginBottom: 10 }]}>
