@@ -4,6 +4,7 @@ import { ThemeContext } from '@/components/ThemeContext'
 import AppCard from '@/components/AppCard'
 import { router } from 'expo-router'
 const Settings = () => {
+  ///dshds
   // --> "!" behind is make sure that the context already existed
   const { dark, toggleTheme } = useContext(ThemeContext)!;
   const [notifications, setNotifications] = useState(true);
