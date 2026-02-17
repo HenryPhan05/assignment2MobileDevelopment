@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Switch, StatusBar, TouchableOpacity } from 'rea
 import React, { useContext, useState } from 'react'
 import { ThemeContext } from '@/components/ThemeContext'
 import AppCard from '@/components/AppCard'
-import { router } from 'expo-router'
+
 const Settings = () => {
   ///dshds
   // --> "!" behind is make sure that the context already existed
@@ -20,13 +20,15 @@ const Settings = () => {
       color: dark ? "white" : 'black'
     },
     textUser: {
+
       width: 150,
       height: 150,
       borderRadius: 100,
-      fontSize: 60,
+      fontSize: 70,
       color: 'black',
       backgroundColor: "#49f384",
       textAlign: 'center',
+
       marginBottom: 15,
       paddingTop: StatusBar.currentHeight,
     },
