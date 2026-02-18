@@ -169,8 +169,8 @@ const Search = () => {
     searchBar: {
       width: "90%",
       marginTop: 10,
-      backgroundColor: dark ? "white" : '#bcbcbc',
-      color: 'white',
+      backgroundColor: dark ? "white" : '#191818',
+      color: dark ? 'black' : 'white',
       borderWidth: 0.8,
       borderRadius: 10,
       padding: 15,
@@ -217,6 +217,7 @@ const Search = () => {
         <TextInput
           style={styles.searchBar}
           placeholder='What do you want listen to?'
+          placeholderTextColor={dark ? "grey" : "white"}
         />
       </View>
       <Text style={styles.text}>Browse all</Text>
