@@ -2,28 +2,29 @@
 import { ThemeContext } from '@/components/ThemeContext';
 import { useContext } from 'react';
 import { Alert, Button, Image, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
-
+import { AuthContext } from '@/components/AuthContext';
 
 export default function HomeScreen() {
+
   const { dark } = useContext(ThemeContext)!;
   const songs = [
     {
       id: "1",
       nameSong: "Moth To A Flame (with the Weeknd)",
       author: "Swedish House Mafia, The Weeknd",
-      image: require("../assets/images/spotifyImages/songs/MothToAFlame.jpg"),
+      image: require("../../assets/images/spotifyImages/songs/MothToAFlame.jpg"),
     },
     {
       id: "2",
       nameSong: "Beauty And A Beat",
       author: "Justin Bieber, Nicki Minaj",
-      image: require("../assets/images/spotifyImages/songs/BeautyAndABeat.jpg"),
+      image: require("../../assets/images/spotifyImages/songs/BeautyAndABeat.jpg"),
     },
     {
       id: "3",
       nameSong: "Flashing Lights",
       author: "Kanye West, Dwele",
-      image: require("../assets/images/spotifyImages/songs/FlashingLights.jpg"),
+      image: require("../../assets/images/spotifyImages/songs/FlashingLights.jpg"),
     }
   ];
 
@@ -32,19 +33,19 @@ export default function HomeScreen() {
       id: "1",
       nameRadio: "Drake",
       artists: "Drake, Kendrick Lamar, Chris Brown, Summer Wal...",
-      image: require("../assets/images/spotifyImages/radios/Drake.jpg"),
+      image: require("../../assets/images/spotifyImages/radios/Drake.jpg"),
     },
     {
       id: "2",
       nameRadio: "Hozier",
       artists: "Noah Kahan, Hozier, David Kushner, Chance Pena, KA...",
-      image: require("../assets/images/spotifyImages/radios/Hozier.jpg"),
+      image: require("../../assets/images/spotifyImages/radios/Hozier.jpg"),
     },
     {
       id: "3",
       nameRadio: "NickleBack",
       artists: "Linkin Park, Nickelback, The Offspring, Foo Figters, Ri...",
-      image: require("../assets/images/spotifyImages/radios/NickleBack.jpg"),
+      image: require("../../assets/images/spotifyImages/radios/NickleBack.jpg"),
     },
   ];
   const albums = [
@@ -52,46 +53,46 @@ export default function HomeScreen() {
       id: "1",
       nameAlbum: "DeBí TiRAR MáS FOToS",
       author: "Bad Bunny",
-      image: require("../assets/images/spotifyImages/albums/BadBunny.jpg"),
+      image: require("../../assets/images/spotifyImages/albums/BadBunny.jpg"),
     },
     {
       id: "2",
       nameAlbum: "Hurry Up Tomorrow",
       author: "The Weeknd",
-      image: require("../assets/images/spotifyImages/albums/TheWeeknd.jpg"),
+      image: require("../../assets/images/spotifyImages/albums/TheWeeknd.jpg"),
     },
     {
       id: "3",
       nameAlbum: "Short n'Sweet",
       author: "Sabrina Carpenter",
-      image: require("../assets/images/spotifyImages/albums/SabrinaCarpenter.jpg"),
+      image: require("../../assets/images/spotifyImages/albums/SabrinaCarpenter.jpg"),
     }
   ];
   const favoriteArtists = [
     {
       id: "1",
       name: "The Weeknd",
-      image: require("../assets/images/spotifyImages/artists/TheWeeknd.jpg"),
+      image: require("../../assets/images/spotifyImages/artists/TheWeeknd.jpg"),
     },
     {
       id: "2",
       name: "Taylor Swift",
-      image: require("../assets/images/spotifyImages/artists/TaylorSwift.jpg"),
+      image: require("../../assets/images/spotifyImages/artists/TaylorSwift.jpg"),
     },
     {
       id: "3",
       name: "Shawn Mendes",
-      image: require("../assets/images/spotifyImages/artists/ShawnMendes.jpg"),
+      image: require("../../assets/images/spotifyImages/artists/ShawnMendes.jpg"),
     },
     {
       id: "4",
       name: "Marshmello",
-      image: require("../assets/images/spotifyImages/artists/MarshMello.jpg"),
+      image: require("../../assets/images/spotifyImages/artists/MarshMello.jpg"),
     },
     {
       id: "5",
       name: "Bruno Mars",
-      image: require("../assets/images/spotifyImages/artists/BrunoMars.jpg"),
+      image: require("../../assets/images/spotifyImages/artists/BrunoMars.jpg"),
     },
   ];
   //alert button
@@ -218,6 +219,7 @@ export default function HomeScreen() {
     },
 
   });
+
   return (
     <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={styles.body} >
       <View style={[styles.header, styles.stickyHeader,]}> {/*header */}

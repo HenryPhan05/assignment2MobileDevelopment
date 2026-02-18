@@ -2,12 +2,14 @@ import { StyleSheet, Text, View, Switch, StatusBar, TouchableOpacity } from 'rea
 import React, { useContext, useState } from 'react'
 import { ThemeContext } from '@/components/ThemeContext'
 import AppCard from '@/components/AppCard'
-
+import { AuthContext } from "@/components/AuthContext";
+import { Redirect } from "expo-router";
 const Settings = () => {
   ///dshds
   // --> "!" behind is make sure that the context already existed
   const { dark, toggleTheme } = useContext(ThemeContext)!;
   const [notifications, setNotifications] = useState(true);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const styles = StyleSheet.create({
     body: {
       flex: 1,
@@ -46,6 +48,9 @@ const Settings = () => {
       fontWeight: "700",
     }
   })
+  if (!isLoggedIn) {
+    return <Redirect href="/login" />;
+  }
   return (
     <View style={styles.body}>
       <Text style={[styles.text, styles.textUser]}>H</Text>
@@ -74,7 +79,7 @@ const Settings = () => {
         activeOpacity={0.6}
 
       >
-        <Text style={styles.textProfile}>Log out</Text>
+        <Text style={styles.textProfile} onPress={() => setIsLoggedIn(false)}>Log out</Text>
       </TouchableOpacity>
     </View>
   )
