@@ -7,7 +7,7 @@ export default function Login() {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const { dark } = useContext(ThemeContext)!;
   if (isLoggedIn) {
-    return <Redirect href="/" />;
+    return <Redirect href="/homepage" />;
   }
   const styles = StyleSheet.create({
     body: {
