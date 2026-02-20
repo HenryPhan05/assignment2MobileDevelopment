@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@/styles/theme";
 import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 type AppCardProps = {
   title: string;

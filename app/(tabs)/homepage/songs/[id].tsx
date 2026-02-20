@@ -43,7 +43,7 @@ export default function SongScreen() {
     }
   }, [title]);
 
-  if (!title || !image) return <Text style={{ marginTop: 50 }}>No data</Text>;
+  if (!title || !image) return <Text style={{ marginTop: 50 }}>Not Found Data</Text>;
 
   return (
     <View style={styles.container}>
