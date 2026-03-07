@@ -18,11 +18,13 @@ const loginSchema = z.object({
 type loginForm = z.infer<typeof loginSchema>;
 
 export default function Login() {
+
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { dark } = useContext(ThemeContext)!;
   const {
     control,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<loginForm>({
@@ -36,7 +38,7 @@ export default function Login() {
   const onSubmit = () => {
     setIsLoggedIn(true);
   };
-
+  const watchValue = watch();  // track filed values to disable/enable the save button
 
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function Login() {
       router.push("/(tabs)/homepage");
     }
   }, [isLoggedIn]);
-
+  const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
 
   // styles
   const styles = StyleSheet.create({
@@ -111,6 +113,9 @@ export default function Login() {
       flexDirection: 'row',
       gap: 8,
     },
+    buttonDisabled: {
+      opacity: 0.5,
+    }
   })
   return (
     <View style={styles.body}>
@@ -166,7 +171,7 @@ export default function Login() {
         </View>
         {[errors.password && <Text style={styles.error}>{errors.password.message}</Text>]}
         <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
-          <Text style={styles.button} >Sign In</Text>
+          <Text style={[styles.button, !isFormFilled && styles.buttonDisabled]} >Sign In</Text>
         </TouchableOpacity>
         {/** */}
         <View style={styles.signUpContainer} >
