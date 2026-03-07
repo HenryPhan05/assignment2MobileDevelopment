@@ -41,7 +41,7 @@ export default function SongScreen() {
         headerTintColor: dark ? "white" : "#111",
       });
     }
-  }, [title]);
+  },);
 
   if (!title || !image) return <Text style={{ marginTop: 50 }}>Not Found Data</Text>;
 

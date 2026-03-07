@@ -1,14 +1,48 @@
-import { View, Button, StyleSheet, Image, Text, TextInput, TouchableOpacity } from "react-native";
-import { useContext } from "react";
+import { View, Button, StyleSheet, Image, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/components/AuthContext";
 import { Redirect } from "expo-router";
 import { ThemeContext } from "@/components/ThemeContext";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+//defind  a zod Schema for login data
+const loginSchema = z.object({
+  email: z.email("invalid email address!"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters!"),
+})
+type loginForm = z.infer<typeof loginSchema>;
+
 export default function Login() {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [isLoggedUp, setIsLoggedUp] = useState<boolean>(false);
   const { dark } = useContext(ThemeContext)!;
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onSubmit",
+  });
+  const onSubmit = () => {
+    setIsLoggedIn(true);
+  };
   if (isLoggedIn) {
     return <Redirect href="/homepage" />;
   }
+  if (isLoggedUp) {
+    return <Redirect href="/(auth)/logup" />
+  }
+
+
+  // styles
   const styles = StyleSheet.create({
     body: {
       flex: 1,
@@ -49,13 +83,29 @@ export default function Login() {
       color: dark ? "white" : "black",
     },
     button: {
-      width: "90%",
+      width: "100%",
       backgroundColor: dark ? 'white' : 'black',
       textAlign: 'center',
       color: dark ? 'black' : 'white',
       fontWeight: '600',
       padding: 10,
       borderRadius: 10,
+    },
+    inputError: {
+      borderColor: 'red',
+    },
+    error: {
+      color: 'red',
+      fontSize: 11,
+      marginTop: 4,
+    },
+    smallText: {
+      color: dark ? "white" : "black",
+      fontSize: 12,
+    },
+    signUpContainer: {
+      flexDirection: 'row',
+      gap: 8,
     }
   })
   return (
@@ -65,16 +115,48 @@ export default function Login() {
         style={{ width: 50, height: 50, }}
       />
       <View style={styles.container}>
-        <Text style={styles.textContainer}>Login</Text>
+        <Text style={styles.textContainer}>Sign In</Text>
+        {/**Email */}
         <Text style={styles.textUser}>Email</Text>
-        <TextInput placeholder="Enter your email" style={styles.input}
-          placeholderTextColor={"grey"} />
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={[styles.input, errors.email && styles.inputError]}
+              placeholder="Enter your Email"
+              placeholderTextColor={'grey'}
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {[errors.email && <Text style={styles.error}>{errors.email.message}</Text>]}
+        {/**password */}
         <Text style={styles.textUser}>Password</Text>
-        <TextInput placeholder="Enter your password" style={styles.input}
-          placeholderTextColor={'grey'} />
-        <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }}>
-          <Text style={styles.button} onPress={() => setIsLoggedIn(true)}>Log In</Text>
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={[styles.input, errors.password && styles.inputError]}
+              placeholder="Enter your Password"
+              placeholderTextColor={'grey'}
+              value={value}
+              onChangeText={onChange}
+            />
+          )} />
+        {[errors.password && <Text style={styles.error}>{errors.password.message}</Text>]}
+        <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
+          <Text style={styles.button} >Sign In</Text>
         </TouchableOpacity>
+        {/** */}
+        <View style={styles.signUpContainer} >
+          <Text style={[styles.smallText, {}]}>Don&apos;t have an account ?</Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={() => setIsLoggedUp(true)}>
+            <Text style={[styles.smallText, { textDecorationLine: "underline", fontWeight: 'bold' }]}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
