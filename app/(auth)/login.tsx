@@ -1,11 +1,13 @@
-import { View, Button, StyleSheet, Image, Text, TextInput, TouchableOpacity, ScrollView } from "react-native";
-import { useContext, useState } from "react";
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, } from "react-native";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/components/AuthContext";
-import { Redirect } from "expo-router";
+
 import { ThemeContext } from "@/components/ThemeContext";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 //defind  a zod Schema for login data
 const loginSchema = z.object({
   email: z.email("invalid email address!"),
@@ -17,7 +19,7 @@ type loginForm = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const [isLoggedUp, setIsLoggedUp] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { dark } = useContext(ThemeContext)!;
   const {
     control,
@@ -34,12 +36,14 @@ export default function Login() {
   const onSubmit = () => {
     setIsLoggedIn(true);
   };
-  if (isLoggedIn) {
-    return <Redirect href="/homepage" />;
-  }
-  if (isLoggedUp) {
-    return <Redirect href="/(auth)/logup" />
-  }
+
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/(tabs)/homepage");
+    }
+  }, [isLoggedIn]);
 
 
   // styles
@@ -106,7 +110,7 @@ export default function Login() {
     signUpContainer: {
       flexDirection: 'row',
       gap: 8,
-    }
+    },
   })
   return (
     <View style={styles.body}>
@@ -133,28 +137,44 @@ export default function Login() {
         />
         {[errors.email && <Text style={styles.error}>{errors.email.message}</Text>]}
         {/**password */}
-        <Text style={styles.textUser}>Password</Text>
-        <Controller
-          control={control}
-          name="password"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={[styles.input, errors.password && styles.inputError]}
-              placeholder="Enter your Password"
-              placeholderTextColor={'grey'}
-              value={value}
-              onChangeText={onChange}
-            />
-          )} />
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.textUser}>Password</Text>
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Text>
+              {showPassword ? <Ionicons name={dark ? 'eye-off-outline' : 'eye-off'} color={dark ? "white" : "black"} size={20} />
+                : <Ionicons name={dark ? 'eye-outline' : 'eye'} color={dark ? "white" : "black"} size={20} />}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                secureTextEntry={showPassword}
+                style={[styles.input, errors.password && styles.inputError]}
+                placeholder="Enter your Password"
+                placeholderTextColor={'grey'}
+                value={value}
+                onChangeText={onChange}
+
+              />
+            )}
+          />
+
+        </View>
         {[errors.password && <Text style={styles.error}>{errors.password.message}</Text>]}
         <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.button} >Sign In</Text>
         </TouchableOpacity>
         {/** */}
         <View style={styles.signUpContainer} >
-          <Text style={[styles.smallText, {}]}>Don&apos;t have an account ?</Text>
-          <TouchableOpacity activeOpacity={0.6} onPress={() => setIsLoggedUp(true)}>
-            <Text style={[styles.smallText, { textDecorationLine: "underline", fontWeight: 'bold' }]}>Sign Up</Text>
+          <Text style={[styles.smallText,]}>Don&apos;t have an account ?</Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={() => router.push("/(auth)/logup")}>
+            <Text style={{ color: dark ? "white" : "black", textDecorationLine: "underline", fontWeight: 'bold' }}>
+              Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
