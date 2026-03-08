@@ -2,8 +2,8 @@ import { ThemeContext, ThemeProvider } from '@/components/ThemeContext';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 
-import { Tabs } from 'expo-router';
-import { Redirect } from "expo-router";
+import { Tabs, Redirect } from 'expo-router';
+
 import { useContext } from 'react';
 import { AuthContext } from "@/components/AuthContext";
 export default function TabsLayout() {

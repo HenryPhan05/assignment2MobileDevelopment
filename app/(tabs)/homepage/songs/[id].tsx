@@ -3,7 +3,10 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useContext, useLayoutEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 export default function SongScreen() {
-  const { title, image, author } = useLocalSearchParams<{ title: string; image: string; author: string }>();
+  const params = useLocalSearchParams();
+  const title = Array.isArray(params.title) ? params.title[0] : params.title;
+  const image = Array.isArray(params.image) ? params.image[0] : params.image;
+  const author = Array.isArray(params.author) ? params.author[0] : params.author;
   const { dark } = useContext(ThemeContext)!;
   const navigation = useNavigation();
   const styles = StyleSheet.create({
@@ -41,7 +44,7 @@ export default function SongScreen() {
         headerTintColor: dark ? "white" : "#111",
       });
     }
-  }, [title]);
+  }, [title, dark]);
 
   if (!title || !image) return <Text style={{ marginTop: 50 }}>Not Found Data</Text>;
 
