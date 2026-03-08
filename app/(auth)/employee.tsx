@@ -20,7 +20,7 @@ const employeeSchema = z.object({
     .regex(/^\d{10}$/, "Phone number must be 10 digits!"),
   postalCode: z
     .string()
-    .regex(/^[A-Za-z]\d[A-Za-z] ? \d[A-Za-z]\d$/, "Invalid Postal Code! Must like: T2A 5A5"),
+    .regex(/^[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]\d$/, "Invalid Postal Code! Must like: T2A 5A5"),
   EmployeeCode: z
     .string()
     .regex(/^\d{4}$/, "Code must be 4 digits!"),
