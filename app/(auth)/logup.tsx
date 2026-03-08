@@ -38,6 +38,7 @@ const SignUp = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
     control,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<signUpForm>({
@@ -65,10 +66,10 @@ const SignUp = () => {
   const onSubmit = () => {
     setIsLoggedUp(true);
     setIsLoggedIn(true);
-
   }
 
-
+  const watchValue = watch();  // track filed values to disable/enable the save button
+  const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
   const styles = StyleSheet.create({
     body: {
       flex: 1,
@@ -123,6 +124,9 @@ const SignUp = () => {
       flexDirection: 'row',
       gap: 8,
     },
+    buttonDisabled: {
+      opacity: 0.5,
+    }
   })
   return (
     <ScrollView style={styles.body} contentContainerStyle={styles.contentBody}>
@@ -244,7 +248,7 @@ const SignUp = () => {
       </View>
       {[errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword.message}</Text>]}
 
-      <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
+      <TouchableOpacity activeOpacity={0.6} style={[!isFormFilled && styles.buttonDisabled, { alignItems: 'center' }]} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.button} >Sign Up</Text>
       </TouchableOpacity>
       {/** */}

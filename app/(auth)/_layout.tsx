@@ -19,6 +19,14 @@ const AuthLayout = () => {
           headerTitleAlign: "center",
           headerTintColor: dark ? "white" : "#111",
         }} />
+      <Stack.Screen
+        name="employee"
+        options={{
+          headerTitle: 'Employee Information',
+          headerStyle: { backgroundColor: dark ? 'black' : "white" },
+          headerTitleAlign: 'center',
+          headerTintColor: dark ? "white" : "#111",
+        }} />
     </Stack>
   )
 }

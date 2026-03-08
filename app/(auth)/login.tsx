@@ -182,6 +182,11 @@ export default function Login() {
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => router.push("/(auth)/employee")}>
+          <Text style={{ color: dark ? "white" : "black", textDecorationLine: "underline", fontWeight: 'bold', textAlign: 'center' }}>
+            Employee Information
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
