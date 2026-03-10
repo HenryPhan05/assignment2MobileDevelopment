@@ -237,7 +237,10 @@ export default function HomeScreen() {
           {
             songs.map((song) => (
               <TouchableOpacity key={song.id} style={styles.songSection}
-                onPress={() => router.push({ pathname: "/homepage/songs/[id]", params: { id: song.id, title: song.nameSong, image: Image.resolveAssetSource(song.image).uri, author: song.author } })}>
+                onPress={() => {
+                  const imageUri = Image.resolveAssetSource(song.image).uri;
+                  router.push({ pathname: "/homepage/songs/[id]", params: { id: song.id, title: song.nameSong, image: imageUri, author: song.author } })
+                }}>
                 <Image source={song.image} style={styles.imageSong} />
                 <View style={{ flex: 1, marginLeft: 10, gap: 5 }}>
                   <Text style={styles.textNameSong}>{song.nameSong}</Text>

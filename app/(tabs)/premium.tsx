@@ -90,7 +90,7 @@ const Premium = () => {
     <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} style={styles.body}>
       <Text style={[styles.alignMarginLeft, styles.text, { fontSize: 15, fontWeight: "800", marginBottom: 10 }]}><MaterialIcons name="payments" size={15} color={`${dark ? "white" : "black"}`} />  Premium</Text>
       <Text style={[styles.text, styles.alignMarginLeft, { fontSize: 25, fontWeight: "800", marginBottom: 10 }]}>Get more out of your music with Premium Individual</Text>
-      <Text style={[styles.alignMarginLeft, { fontSize: 12, marginBottom: 15, color: dark ? "#6b7280" : "#353333" }]} >You can't upgrade to Premium in the app. We know, it's not ideal.</Text>
+      <Text style={[styles.alignMarginLeft, { fontSize: 12, marginBottom: 15, color: dark ? "#6b7280" : "#353333" }]} >You can&apos;t upgrade to Premium in the app. We know, it&apos;s not ideal.</Text>
       <Text style={[styles.text, styles.alignMarginLeft, { fontSize: 25, fontWeight: "800", marginBottom: 10 }]}>Available plans</Text>
       {plans.map((plan) => (
         <View key={plan.id} style={styles.planCard}>
@@ -104,7 +104,7 @@ const Premium = () => {
           {plan.descriptions?.map((desc, index) => (
             <Text key={index} style={styles.planDescription}>• {desc}</Text>
           ))}
-          <Text style={[styles.alignMarginLeft, { fontSize: 12, marginTop: 10, marginBottom: 15, color: dark ? "#6b7280" : "#353333" }]} >You can't upgrade to Premium in the app. We know, it's not ideal.</Text>
+          <Text style={[styles.alignMarginLeft, { fontSize: 12, marginTop: 10, marginBottom: 15, color: dark ? "#6b7280" : "#353333" }]} >You can&apos;t upgrade to Premium in the app. We know, it&apos;s not ideal.</Text>
         </View>
       ))}
     </ScrollView >

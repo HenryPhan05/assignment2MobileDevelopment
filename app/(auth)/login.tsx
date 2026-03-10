@@ -1,14 +1,54 @@
-import { View, Button, StyleSheet, Image, Text, TextInput, TouchableOpacity } from "react-native";
-import { useContext } from "react";
+import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, } from "react-native";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/components/AuthContext";
-import { Redirect } from "expo-router";
+
 import { ThemeContext } from "@/components/ThemeContext";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+//defind  a zod Schema for login data
+const loginSchema = z.object({
+  email: z.email("invalid email address!"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters!"),
+})
+type loginForm = z.infer<typeof loginSchema>;
+
 export default function Login() {
+
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { dark } = useContext(ThemeContext)!;
-  if (isLoggedIn) {
-    return <Redirect href="/homepage" />;
-  }
+  const {
+    control,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<loginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    mode: "onSubmit",
+  });
+  const onSubmit = () => {
+    setIsLoggedIn(true);
+  };
+  const watchValue = watch();  // track filed values to disable/enable the save button
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/(tabs)/homepage");
+    }
+  }, [isLoggedIn]);
+  const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
+
+  // styles
   const styles = StyleSheet.create({
     body: {
       flex: 1,
@@ -49,13 +89,32 @@ export default function Login() {
       color: dark ? "white" : "black",
     },
     button: {
-      width: "90%",
+      width: "100%",
       backgroundColor: dark ? 'white' : 'black',
       textAlign: 'center',
       color: dark ? 'black' : 'white',
       fontWeight: '600',
       padding: 10,
       borderRadius: 10,
+    },
+    inputError: {
+      borderColor: 'red',
+    },
+    error: {
+      color: 'red',
+      fontSize: 11,
+      marginTop: 4,
+    },
+    smallText: {
+      color: dark ? "white" : "black",
+      fontSize: 12,
+    },
+    signUpContainer: {
+      flexDirection: 'row',
+      gap: 8,
+    },
+    buttonDisabled: {
+      opacity: 0.5,
     }
   })
   return (
@@ -65,15 +124,68 @@ export default function Login() {
         style={{ width: 50, height: 50, }}
       />
       <View style={styles.container}>
-        <Text style={styles.textContainer}>Login</Text>
+        <Text style={styles.textContainer}>Sign In</Text>
+        {/**Email */}
         <Text style={styles.textUser}>Email</Text>
-        <TextInput placeholder="Enter your email" style={styles.input}
-          placeholderTextColor={"grey"} />
-        <Text style={styles.textUser}>Password</Text>
-        <TextInput placeholder="Enter your password" style={styles.input}
-          placeholderTextColor={'grey'} />
-        <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }}>
-          <Text style={styles.button} onPress={() => setIsLoggedIn(true)}>Log In</Text>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              style={[styles.input, errors.email && styles.inputError]}
+              placeholder="Enter your Email"
+              placeholderTextColor={'grey'}
+              value={value}
+              onChangeText={onChange}
+            />
+          )}
+        />
+        {[errors.email && <Text style={styles.error}>{errors.email.message}</Text>]}
+        {/**password */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={styles.textUser}>Password</Text>
+          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+            <Text>
+              {showPassword ? <Ionicons name={dark ? 'eye-off-outline' : 'eye-off'} color={dark ? "white" : "black"} size={20} />
+                : <Ionicons name={dark ? 'eye-outline' : 'eye'} color={dark ? "white" : "black"} size={20} />}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                secureTextEntry={showPassword}
+                style={[styles.input, errors.password && styles.inputError]}
+                placeholder="Enter your Password"
+                placeholderTextColor={'grey'}
+                value={value}
+                onChangeText={onChange}
+
+              />
+            )}
+          />
+
+        </View>
+        {[errors.password && <Text style={styles.error}>{errors.password.message}</Text>]}
+        <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
+          <Text style={[styles.button, !isFormFilled && styles.buttonDisabled]} >Sign In</Text>
+        </TouchableOpacity>
+        {/** */}
+        <View style={styles.signUpContainer} >
+          <Text style={[styles.smallText,]}>Don&apos;t have an account ?</Text>
+          <TouchableOpacity activeOpacity={0.6} onPress={() => router.push("/(auth)/logup")}>
+            <Text style={{ color: dark ? "white" : "black", textDecorationLine: "underline", fontWeight: 'bold' }}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity activeOpacity={0.6} onPress={() => router.push("/(auth)/employee")}>
+          <Text style={{ color: dark ? "white" : "black", textDecorationLine: "underline", fontWeight: 'bold', textAlign: 'center' }}>
+            Employee Information
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

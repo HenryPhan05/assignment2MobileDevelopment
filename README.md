@@ -10,11 +10,15 @@
 
 3. Here is the tree of assignment
 ```
-───app
+├───app
+│   │   index.tsx
 │   │   _layout.tsx
 │   │
 │   ├───(auth)
+│   │       employee.tsx
 │   │       login.tsx
+│   │       logup.tsx
+│   │       _layout.tsx
 │   │
 │   └───(tabs)
 │       │   library.tsx
