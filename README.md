@@ -3,6 +3,8 @@
 -Just copy the link github then go to VSCode and open 'terminal' then type 'git clone' and past the link that you copied
 2. How can run it?
 -Make sure that you install nodeJs first, then cd to the folder 'spotify-clone'.
+-Clone
+```git clone https://github.com/HenryPhan05/assignment2MobileDevelopment```
 -Type
         ```npm install```
 - Finally, type in the terminal
@@ -73,3 +75,11 @@
 └───styles
         theme.tsx
 ```
+- Table in Supabase using for this spotify-clone
+<img width="384" height="333" alt="Screenshot 2026-04-16 000801" src="https://github.com/user-attachments/assets/2e01f676-f773-4c6e-8899-18b77b7daa31" />
+
+
+
+
+
+
