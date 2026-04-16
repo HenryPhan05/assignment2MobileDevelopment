@@ -1,12 +1,12 @@
-import { ScrollView, StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
-import React, { useContext, useState, } from 'react'
-import { ThemeContext } from '@/components/ThemeContext'
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { AuthContext } from '@/components/AuthContext';
-import { router } from 'expo-router';
+import { ThemeContext } from '@/components/ThemeContext';
+import { addUser, checkEmailExists } from '@/lib/supabaseImplementation';
 import { Ionicons } from '@expo/vector-icons';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from 'expo-router';
+import React, { useContext, useState, } from 'react';
+import { Controller, useForm } from "react-hook-form";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { z } from "zod";
 // define zod schema for logUp data
 const signUpSchema = z.object({
   firstName: z
@@ -33,7 +33,7 @@ const signUpSchema = z.object({
 type signUpForm = z.infer<typeof signUpSchema>;
 const SignUp = () => {
   const { dark } = useContext(ThemeContext)!;
-  const { setIsLoggedUp, setIsLoggedIn } = useContext(AuthContext)!;
+  const [authError, setAuthError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const {
@@ -63,13 +63,32 @@ const SignUp = () => {
     { label: "Password must contain a special character!", valid: /[!@#$%^&*(),.?\":{}|<>]/.test(passwordValue) },
   ];
 
-  const onSubmit = () => {
-    setIsLoggedUp(true);
-    setIsLoggedIn(true);
+  const onSubmit = async (data: signUpForm) => {
+    try {
+      setAuthError(null);
+      const exists = await checkEmailExists(data.email);
+      if (exists) {
+        setAuthError("Email Already exists!");
+        return;
+      }
+      await addUser({
+        first_name: "John",
+        last_name: "Doe",
+        email: data.email
+      },
+        data.password,
+      );
+      router.replace("/(auth)/login");
+    }
+    catch (e) {
+      setAuthError(
+        e instanceof Error ? e.message : "Sign up failed. Please try again."
+      );
+    }
   }
 
-  const watchValue = watch();  // track filed values to disable/enable the save button
-  const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
+
+
   const styles = StyleSheet.create({
     body: {
       flex: 1,
@@ -247,8 +266,10 @@ const SignUp = () => {
 
       </View>
       {[errors.confirmPassword && <Text style={styles.error}>{errors.confirmPassword.message}</Text>]}
-
-      <TouchableOpacity activeOpacity={0.6} style={[!isFormFilled && styles.buttonDisabled, { alignItems: 'center' }]} onPress={handleSubmit(onSubmit)}>
+      {authError && (
+        <Text style={[styles.error]}>{authError}</Text>
+      )}
+      <TouchableOpacity activeOpacity={0.6} style={[styles.buttonDisabled, { alignItems: 'center' }]} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.button} >Sign Up</Text>
       </TouchableOpacity>
       {/** */}
@@ -259,7 +280,7 @@ const SignUp = () => {
         </TouchableOpacity>
       </View>
 
-    </ScrollView>
+    </ScrollView >
   )
 }
 
