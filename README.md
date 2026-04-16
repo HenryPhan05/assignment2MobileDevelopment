@@ -3,16 +3,22 @@
 -Just copy the link github then go to VSCode and open 'terminal' then type 'git clone' and past the link that you copied
 2. How can run it?
 -Make sure that you install nodeJs first, then cd to the folder 'spotify-clone'.
--Type ```npm install```
-- Finally, type in the terminal ```npx expo start```
+-Type
+        ```npm install```
+- Finally, type in the terminal
+        ```npx expo start```
 
 3. Here is the tree of assignment
 ```
-───app
+├───app
+│   │   index.tsx
 │   │   _layout.tsx
 │   │
 │   ├───(auth)
+│   │       employee.tsx
 │   │       login.tsx
+│   │       logup.tsx
+│   │       _layout.tsx
 │   │
 │   └───(tabs)
 │       │   library.tsx
