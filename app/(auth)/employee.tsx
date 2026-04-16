@@ -1,12 +1,11 @@
-import { StyleSheet, Text, ScrollView, Image, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
-import { router } from 'expo-router';
 import { ThemeContext } from '@/components/ThemeContext';
-import { AuthContext } from '@/components/AuthContext';
 import { Ionicons } from '@expo/vector-icons';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { router } from 'expo-router';
+import React, { useContext, useState } from 'react';
+import { Controller, useForm } from "react-hook-form";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { z } from "zod";
 const employeeSchema = z.object({
   fullName: z.
     string()
@@ -28,7 +27,7 @@ const employeeSchema = z.object({
 type employeeForm = z.infer<typeof employeeSchema>;
 const Employee = () => {
   const { dark } = useContext(ThemeContext)!;
-  const { setIsLoggedUp, setIsLoggedIn } = useContext(AuthContext)!;
+
   const [showCode, setShowCode] = useState<boolean>(true);
   const {
     control,
@@ -51,8 +50,7 @@ const Employee = () => {
   const watchValue = watch();
   const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
   const onSubmit = () => {
-    setIsLoggedUp(true);
-    setIsLoggedIn(true);
+
   }
   const styles = StyleSheet.create({
     body: {

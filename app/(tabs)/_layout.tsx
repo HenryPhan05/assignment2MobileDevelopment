@@ -1,18 +1,17 @@
-import { ThemeContext, ThemeProvider } from '@/components/ThemeContext';
+import { ThemeContext } from '@/components/ThemeContext';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 
 
-import { Tabs, Redirect } from 'expo-router';
-
+import { useAuth } from '@/hook/useAuth';
+import { Redirect, Tabs } from 'expo-router';
 import { useContext } from 'react';
-import { AuthContext } from "@/components/AuthContext";
 export default function TabsLayout() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { session, isLoading } = useAuth();
   const { dark } = useContext(ThemeContext)!;
-  if (!isLoggedIn) {
-    return <Redirect href="/login" />;
+  if (isLoading) return null;
+  if (!session) {
+    return <Redirect href="/(auth)/login" />;
   }
-
   return (
     <Tabs
       screenOptions={{

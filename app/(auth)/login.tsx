@@ -1,13 +1,12 @@
-import { View, StyleSheet, Image, Text, TextInput, TouchableOpacity, } from "react-native";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/components/AuthContext";
-
 import { ThemeContext } from "@/components/ThemeContext";
-import { Controller, useForm } from "react-hook-form";
-import { z } from "zod";
+import { useAuth } from "@/hook/useAuth";
+import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
+import { useContext, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import { z } from "zod";
 //defind  a zod Schema for login data
 const loginSchema = z.object({
   email: z.email("invalid email address!"),
@@ -18,8 +17,8 @@ const loginSchema = z.object({
 type loginForm = z.infer<typeof loginSchema>;
 
 export default function Login() {
-
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
+  const [authError, setAuthError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const { dark } = useContext(ThemeContext)!;
   const {
@@ -35,18 +34,22 @@ export default function Login() {
     },
     mode: "onSubmit",
   });
-  const onSubmit = () => {
-    setIsLoggedIn(true);
-  };
-  const watchValue = watch();  // track filed values to disable/enable the save button
-
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/(tabs)/homepage");
+  const onSubmit = async (data: loginForm) => {
+    try {
+      setAuthError(null);
+      await signIn(data.email, data.password);
     }
-  }, [isLoggedIn]);
-  const isFormFilled = Object.values(watchValue).every((v) => v.length > 0);
+    catch (e) {
+      setAuthError(
+        e instanceof Error ? e.message : "Sign in failed, please try again."
+      )
+    }
+  };
+
+
+
+
+
 
   // styles
   const styles = StyleSheet.create({
@@ -170,8 +173,11 @@ export default function Login() {
 
         </View>
         {[errors.password && <Text style={styles.error}>{errors.password.message}</Text>]}
+        {authError && (
+          <Text style={styles.error}>{authError}</Text>
+        )}
         <TouchableOpacity activeOpacity={0.6} style={{ alignItems: 'center' }} onPress={handleSubmit(onSubmit)}>
-          <Text style={[styles.button, !isFormFilled && styles.buttonDisabled]} >Sign In</Text>
+          <Text style={[styles.button]} >Sign In</Text>
         </TouchableOpacity>
         {/** */}
         <View style={styles.signUpContainer} >
